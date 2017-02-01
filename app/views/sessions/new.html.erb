@@ -1,0 +1,31 @@
+<div id="authorize-div">
+  <%= form_for :calender_event , :html => {:id => "calander_event"} do |f| %>
+    <div>Title:<%= f.text_field :title %></div>
+    <div>Description:<%= f.text_field :description %></div>
+    <div>From:<%= f.datetime_select :from %></div>
+    <div>To:<%= f.datetime_select :to %></div>
+    <div>Timezone:<%= f.text_field :timezone %></div>
+    <div>Repeats:<%= f.select :repeats,['Weekly','Monthly'],{},{onChange: "show_repeats(this);"} %></div>
+    <div>Repeats Every:<%= f.number_field :repeats_every,min: 1 %></div>
+    <div id="repeats_by" style="display: none;">Repeats By:<%= f.radio_button :repeats_by,value: "month" %>day of the month<%= f.radio_button :repeats_by,value: "week" %>day of the week</div>
+    <div id="repeats_on">Repeats On:<%= f.radio_button :repeats_on,value: "Sun" %>S
+                    <%= f.radio_button :repeats_on,value: "Mon" %>M
+                    <%= f.radio_button :repeats_on,value: "Tue" %>T
+                    <%= f.radio_button :repeats_on,value: "Wed" %>W
+                    <%= f.radio_button :repeats_on,value: "Thu" %>T
+                    <%= f.radio_button :repeats_on,value: "Fri" %>F
+                    <%= f.radio_button :repeats_on,value: "Sat" %>S
+    </div>
+    <div>Starts On:<%= f.text_field :starts_on %></div>
+    <div>Summary: <span id="summary"></span></div>
+  <!--Button for the user to click to initiate auth sequence -->
+  <div>
+    <%= f.submit "Create Event", id: "authorize-button", onclick: "handleAuthClick(this);return false;"%>
+  </div>
+  <% end %>
+</div>
+
+<div>
+<pre id="output"></pre>
+</div>
+
