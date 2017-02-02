@@ -1,9 +1,10 @@
 GoogleCalenderPoc::Application.routes.draw do
+
+
   get 'auth/:provider/callback', to: 'sessions#create'
 
-  get "sessions/destroy"
-  get 'sessions/new'
-
+  resources :sessions
+  resources :events
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

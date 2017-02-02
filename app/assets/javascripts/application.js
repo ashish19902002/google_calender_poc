@@ -58,7 +58,7 @@
      * once client library is loaded.
      */
     function loadCalendarApi() {
-    	gapi.client.load('calendar', 'v3', create_event);
+    	gapi.client.load('calendar', 'v3', update_event);
     }
 
     /**
@@ -88,25 +88,29 @@
 	  	end_hours = document.getElementById("calender_event_to_4i").value;
 	  	end_min =  document.getElementById("calender_event_to_5i").value;
 	  	end = end_year+'-'+end_month+'-'+end_day+'T'+end_hours+':'+end_min+':00+05:30';
-
+	  	timezone = 'Asia/Kolkata';
+	  	loctn = document.getElementById("calender_event_location").value;
+	  	attendees = [{'email': 'ashish.mittal@quovantis.com'}];
+	  	repeat_every = document.getElementById("calender_event_repeats_every").value;
+	  	repeat = document.getElementById("calender_event_repeats").value;
+	  	// repeat_on = "FR";
+	  	recurrence = ['RRULE:FREQ='+repeat+';'+'INTERVAL='+repeat_every];
+	  	alert(recurrence);
+	  	// console.log(attendees);
 	   	var event = {
 	   		'summary': title,
-	   		'location': '800 Howard St., San Francisco, CA 94103',
+	   		'location': loctn,
 	   		'description': description,
 	   		'start': {
 	   			'dateTime': start, //'2017-2-2T09:00:00-07:00',
-	   			'timeZone': 'Asia/Kolkata'
+	   			'timeZone': timezone
 	   		},
 	   		'end': {
 	   			'dateTime': end,//'2017-2-2T11:00:00-07:00',
-	   			'timeZone': 'Asia/Kolkata'
+	   			'timeZone': timezone
 	   		},
-	   		'recurrence': [
-	   		'RRULE:FREQ=DAILY;COUNT=2'
-	   		],
-	   		'attendees': [
-	   		{'email': 'ashish.mittal@quovantis.com'}
-	   		],
+	   		'recurrence': recurrence,
+	   		'attendees': attendees,
 	   		'reminders': {
 	   			'useDefault': false,
 	   			'overrides': [
@@ -122,7 +126,71 @@
 	   	});
 
 	   	request.execute(function(event) {
+	   		console.log(event);
+	   		alert(event.id);
 	   		appendPre('Event created: ' + event.htmlLink);
+	   	});
+   }
+
+    function update_event() {
+	  	title = document.getElementById("calender_event_title").value;
+	  	description = document.getElementById("calender_event_description").value;
+	  	start_year =  document.getElementById("calender_event_from_1i").value;
+	  	start_month = document.getElementById("calender_event_from_2i").value;
+	  	start_day =  document.getElementById("calender_event_from_3i").value;
+	  	start_hours = document.getElementById("calender_event_from_4i").value;
+	  	start_min =  document.getElementById("calender_event_from_5i").value;
+	  	start = start_year+'-'+start_month+'-'+start_day+'T'+start_hours+':'+start_min+':00+05:30';
+	   	end_year =  document.getElementById("calender_event_to_1i").value;
+	  	end_month = document.getElementById("calender_event_to_2i").value;
+	  	end_day =  document.getElementById("calender_event_to_3i").value;
+	  	end_hours = document.getElementById("calender_event_to_4i").value;
+	  	end_min =  document.getElementById("calender_event_to_5i").value;
+	  	end = end_year+'-'+end_month+'-'+end_day+'T'+end_hours+':'+end_min+':00+05:30';
+	  	timezone = 'Asia/Kolkata';
+	  	loctn = document.getElementById("calender_event_location").value;
+	  	attendees = [{'email': 'ashish.mittal@quovantis.com'}];
+	  	repeat_every = document.getElementById("calender_event_repeats_every").value;
+	  	repeat = document.getElementById("calender_event_repeats").value;
+	  	// repeat_on = "FR";
+	  	recurrence = ['RRULE:FREQ='+repeat+';'+'INTERVAL='+repeat_every];
+	  	alert(recurrence);
+	  	// console.log(attendees);
+	   	// var event = {
+	   	// 	'summary': title,
+	   	// 	'location': loctn,
+	   	// 	'description': description,
+	   	// 	'start': {
+	   	// 		'dateTime': start, //'2017-2-2T09:00:00-07:00',
+	   	// 		'timeZone': timezone
+	   	// 	},
+	   	// 	'end': {
+	   	// 		'dateTime': end,//'2017-2-2T11:00:00-07:00',
+	   	// 		'timeZone': timezone
+	   	// 	},
+	   	// 	'recurrence': recurrence,
+	   	// 	'attendees': attendees,
+	   	// 	'reminders': {
+	   	// 		'useDefault': false,
+	   	// 		'overrides': [
+	   	// 		{'method': 'email', 'minutes': 24 * 60},
+	   	// 		{'method': 'popup', 'minutes': 10}
+	   	// 		]
+	   	// 	}
+	   	// };
+	   	eventId = 'bnq41ostfp0pq6jqncqaps4hu0';
+	   	event = gapi.client.calendar.events.get({'eventId': eventId, 'calendarId': 'primary'});
+	   	console.log(event);
+	   	event.summary = "sorry now its change :("
+	   	var request = gapi.client.calendar.events.update({
+	   		'calendarId': 'primary',
+	   		'resource': event
+	   	});
+
+	   	request.execute(function(event) {
+	   		console.log(event);
+	   		alert(event.id);
+	   		appendPre('Event updated: ' + event.htmlLink);
 	   	});
    }
 
@@ -135,3 +203,5 @@ function show_repeats(e) {
 
 	}
 }
+
+// bnq41ostfp0pq6jqncqaps4hu0

@@ -39,3 +39,4 @@ gem 'jquery-rails'
 gem "omniauth-google-oauth2"
 gem 'google-api-client'
 gem 'httparty'
+gem "recurrence", :require => "recurrence/namespace"
